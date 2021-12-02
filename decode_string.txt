@@ -1,0 +1,75 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+public class Main
+{
+	public static void main(String[] args) {
+		
+    Stack<Character> stack1 = new Stack<Character>();
+    Stack<Character> stack2 = new Stack<Character>();
+    String str1="";
+    String str2="";
+    int i,key,count,k;
+    char item;
+    
+    Scanner sc = new Scanner(System.in);
+    
+    System.out.println("Enter the encoded string: ");
+    String str = sc.nextLine();
+    
+    for(i=0;i<str.length();i++){
+       key = key_value(str1.charAt(i));
+        
+        if(key>0){
+            stack1.push(str.charAt(i));
+        }
+        
+        if(key<0){
+            
+            while(key_value(stack1.peek())!=2){
+                item = stack1.pop();
+                stack2.push(item);
+            }
+        
+            count = stack1.pop()-'0';
+            
+            while(!stack2.isEmpty()){
+                str1+=stack2.pop();
+            }
+            
+            for(k=0;k<count-1;k++){
+                str1 = str1.concat(str1);
+            }
+            
+            if(str2.isEmpty()){
+                str2=str1;
+            }
+            else{
+                str2 = str2.concat(str1);
+            }
+            
+        }
+        
+    }
+    
+    System.out.println("Decoded string is: " + str2);
+	    
+	    
+	}
+	
+	static public int key_value(char ch){
+	    if(Character.isDigit(ch)){
+	        return 2;
+	    }
+	    else if(ch=='['){
+	        return 0;
+	    }
+	    else if(ch==']'){
+	        return -1;
+	    }
+	    else{
+	        return 3;
+	    }
+	}
+}
